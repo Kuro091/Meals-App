@@ -1,4 +1,4 @@
-import { ImageBackground, SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { Appearance, ImageBackground, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Stack } from 'expo-router';
@@ -12,6 +12,7 @@ SplashScreen.preventAutoHideAsync();
 
 export default function App() {
   const [appIsReady, setAppIsReady] = useState(false);
+  const [colorScheme, setColorScheme] = useState(Appearance.getColorScheme());
 
   useEffect(() => {
     async function prepare() {
@@ -27,6 +28,10 @@ export default function App() {
         setAppIsReady(true);
         await SplashScreen.hideAsync();
       }
+
+      const subscription = Appearance.addChangeListener(({ colorScheme }) => {
+        setColorScheme(colorScheme);
+      });
     }
 
     prepare();
@@ -49,32 +54,21 @@ export default function App() {
 
   return (
     <>
-      <StatusBar style='light' />
-      <QueryClientProvider client={queryClient}>
-        <SafeAreaView style={styles.container} onLayout={onLayoutRootView}>
-          <Stack
-            screenOptions={{
-              headerBackTitle: '👋Back👋',
-              contentStyle: {
-                backgroundColor: 'transparent',
-              },
-            }}
-          >
-            <Stack.Screen
-              name='index'
-              options={{
-                headerTitle: 'Meals Categories',
-              }}
-            />
+      <View style={{ flex: 1, backgroundColor: colorScheme === 'dark' ? 'black' : 'white' }}>
+        <StatusBar style='inverted' backgroundColor='white' />
+        <QueryClientProvider client={queryClient}>
+          {/* <SafeAreaView style={styles.container} onLayout={onLayoutRootView}> */}
+          <Stack>
             <Stack.Screen
               name='(meals)'
               options={{
-                headerTitle: 'Meals Overview',
+                headerShown: false,
               }}
             />
           </Stack>
-        </SafeAreaView>
-      </QueryClientProvider>
+          {/* </SafeAreaView> */}
+        </QueryClientProvider>
+      </View>
     </>
   );
 }

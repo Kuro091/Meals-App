@@ -1,27 +1,38 @@
 import { FlatList, GestureResponderEvent, ListRenderItemInfo } from 'react-native';
-import { router, useNavigation } from 'expo-router';
+import { useNavigation, useRouter } from 'expo-router';
 import Category from '../../constants/models/Category';
 import { CategoryGridTitle } from '../../components/meals/CategoryGridTitle';
 import { CATEGORIES } from '../../constants/dummy-data';
+import { useEffect } from 'react';
+import { NativeStackNavigationOptions } from 'react-native-screens/lib/typescript/native-stack/types';
 
-const renderCategoryItem = (itemData: ListRenderItemInfo<Category>) => {
-  const handlePress = (e: GestureResponderEvent) => {
+export default function CategoriesScreen() {
+  const navigation = useNavigation();
+  const router = useRouter();
+
+  const handlePress = (item: Category) => {
     router.push({
       pathname: '/overview',
-      params: { categoryId: itemData.item.id },
+      params: { categoryId: item.id },
     });
   };
 
-  return (
-    <CategoryGridTitle
-      onPress={handlePress}
-      title={itemData.item.title}
-      color={itemData.item.color}
-    />
-  );
-};
+  const renderCategoryItem = (itemData: ListRenderItemInfo<Category>) => {
+    return (
+      <CategoryGridTitle
+        onPress={(e) => handlePress(itemData.item)}
+        title={itemData.item.title}
+        color={itemData.item.color}
+      />
+    );
+  };
 
-export default function CategoriesScreen() {
+  useEffect(() => {
+    navigation.setOptions({
+      headerTitle: 'Categories',
+    } as NativeStackNavigationOptions);
+  }, []);
+
   return (
     <FlatList
       numColumns={2}
