@@ -1,12 +1,15 @@
 import { FlatList, GestureResponderEvent, ListRenderItemInfo } from 'react-native';
-import { CATEGORIES } from '../constants/dummy-data';
-import { CategoryGridTitle } from '../components/CategoryGridTitle';
-import Category from '../constants/models/Category';
-import { router } from 'expo-router';
+import { router, useNavigation } from 'expo-router';
+import Category from '../../constants/models/Category';
+import { CategoryGridTitle } from '../../components/meals/CategoryGridTitle';
+import { CATEGORIES } from '../../constants/dummy-data';
 
 const renderCategoryItem = (itemData: ListRenderItemInfo<Category>) => {
   const handlePress = (e: GestureResponderEvent) => {
-    router.push('mealsOverview');
+    router.push({
+      pathname: '/overview',
+      params: { categoryId: itemData.item.id },
+    });
   };
 
   return (

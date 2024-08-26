@@ -1,7 +1,6 @@
 import React from 'react';
 import { GestureResponderEvent, Platform, Pressable, Text, View } from 'react-native';
-import { CATEGORIES } from '../constants/dummy-data';
-import Category from '../constants/models/Category';
+import Category from '../../constants/models/Category';
 
 export const CategoryGridTitle = ({
   title,

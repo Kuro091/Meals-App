@@ -54,7 +54,7 @@ export default function App() {
         <SafeAreaView style={styles.container} onLayout={onLayoutRootView}>
           <Stack
             screenOptions={{
-              headerBackTitle: 'Back',
+              headerBackTitle: '👋Back👋',
               contentStyle: {
                 backgroundColor: 'transparent',
               },
@@ -67,7 +67,7 @@ export default function App() {
               }}
             />
             <Stack.Screen
-              name='mealsOverview'
+              name='(meals)'
               options={{
                 headerTitle: 'Meals Overview',
               }}

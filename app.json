@@ -28,6 +28,9 @@
       "favicon": "./assets/favicon.png"
     },
     "plugins": ["expo-router"],
-    "scheme": "myapp"
+    "scheme": "myapp",
+    "experiments": {
+      "typedRoutes": true
+    }
   }
 }
