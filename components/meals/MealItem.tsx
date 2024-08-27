@@ -34,7 +34,15 @@ const DetailItem = ({ label, value }: { label?: string; value: string }) => (
   </View>
 );
 
-export const MealItem = ({ title, imageUrl, affordability, complexity, duration }: Meal) => {
+interface MealItemProps {
+  onPress: () => void;
+  meal: Meal;
+}
+
+export const MealItem = ({
+  meal: { title, imageUrl, affordability, complexity, duration },
+  onPress,
+}: MealItemProps) => {
   return (
     <View
       style={{
@@ -50,6 +58,7 @@ export const MealItem = ({ title, imageUrl, affordability, complexity, duration 
       }}
     >
       <Pressable
+        onPress={onPress}
         android_ripple={{
           color: 'lightgray',
         }}

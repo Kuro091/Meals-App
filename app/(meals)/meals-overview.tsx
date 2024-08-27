@@ -1,4 +1,4 @@
-import { useLocalSearchParams, useNavigation, usePathname } from 'expo-router';
+import { useLocalSearchParams, useNavigation, usePathname, useRouter } from 'expo-router';
 import { FlatList, Text, View } from 'react-native';
 import { CATEGORIES, MEALS } from '../../constants/dummy-data';
 import Meal from '../../constants/Meal';
@@ -6,25 +6,37 @@ import { MealItem } from '../../components/meals/MealItem';
 import { useEffect } from 'react';
 import { NativeStackNavigationOptions } from 'react-native-screens/lib/typescript/native-stack/types';
 
-function renderMealItem(itemData: Meal) {
-  return <MealItem {...itemData} />;
-}
-
 export default function MealsOverview() {
   const { categoryId } = useLocalSearchParams<{
     categoryId: string;
   }>();
 
   const navigation = useNavigation();
+  const router = useRouter();
+
   const category = CATEGORIES.find((category) => category.id === categoryId);
 
   const displayedMeals = MEALS.filter((meal) => meal.categoryIds.indexOf(categoryId) >= 0);
 
-  useEffect(() => {
-    navigation.setOptions({
-      headerTitle: `Overview of category ${category?.title}`,
-    } as NativeStackNavigationOptions);
-  }, []);
+  function renderMealItem(itemData: Meal) {
+    return (
+      <MealItem
+        meal={itemData}
+        onPress={() => {
+          router.push({
+            pathname: '/meal-details',
+            params: { mealId: itemData.id },
+          });
+        }}
+      />
+    );
+  }
+
+  // useEffect(() => {
+  //   navigation.setOptions({
+  //     headerTitle: `Overview of category ${category?.title}`,
+  //   } as NativeStackNavigationOptions);
+  // }, []);
 
   return (
     <View

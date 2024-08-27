@@ -12,7 +12,7 @@ export default function CategoriesScreen() {
 
   const handlePress = (item: Category) => {
     router.push({
-      pathname: '/overview',
+      pathname: '/meals-overview',
       params: { categoryId: item.id },
     });
   };
@@ -27,11 +27,11 @@ export default function CategoriesScreen() {
     );
   };
 
-  useEffect(() => {
-    navigation.setOptions({
-      headerTitle: 'Categories',
-    } as NativeStackNavigationOptions);
-  }, []);
+  // useEffect(() => {
+  //   navigation.setOptions({
+  //     headerTitle: 'Categories',
+  //   } as NativeStackNavigationOptions);
+  // }, []);
 
   return (
     <FlatList

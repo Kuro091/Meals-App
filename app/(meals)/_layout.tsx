@@ -1,5 +1,12 @@
-import { Stack } from 'expo-router';
-import { Text } from 'react-native';
+import { Stack, useNavigation } from 'expo-router';
+import { NavigationProp, RouteProp, ParamListBase } from '@react-navigation/native';
+import { CATEGORIES, MEALS } from '../../constants/dummy-data';
+
+type RootParamList = {
+  categories: undefined;
+  overview: { categoryId: string };
+  details: { mealId: string };
+};
 
 export default function OverviewLayout() {
   return (
@@ -15,8 +22,46 @@ export default function OverviewLayout() {
         },
       }}
     >
-      <Stack.Screen name='categories' />
-      <Stack.Screen name='overview' />
+      <Stack.Screen
+        name='meal-details'
+        options={({
+          navigation,
+          route,
+        }: {
+          navigation: NavigationProp<ParamListBase>;
+          route: RouteProp<ParamListBase>;
+        }) => {
+          const { mealId } = route.params as RootParamList['details'];
+          const meal = MEALS.find((meal) => meal.id === mealId);
+
+          return {
+            headerTitle: `${meal?.title}`,
+          };
+        }}
+      />
+      <Stack.Screen
+        name='meals-categories'
+        options={{
+          headerTitle: 'Categories',
+        }}
+      />
+      <Stack.Screen
+        name='meals-overview'
+        options={({
+          navigation,
+          route,
+        }: {
+          navigation: NavigationProp<ParamListBase>;
+          route: RouteProp<ParamListBase>;
+        }) => {
+          const { categoryId } = route.params as RootParamList['overview'];
+          const category = CATEGORIES.find((category) => category.id === categoryId);
+
+          return {
+            headerTitle: `${category?.title.toUpperCase()}`,
+          };
+        }}
+      />
     </Stack>
   );
 }
