@@ -2,11 +2,11 @@ import { Stack, useNavigation } from 'expo-router';
 import { NavigationProp, RouteProp, ParamListBase } from '@react-navigation/native';
 import { CATEGORIES, MEALS } from '../../constants/dummy-data';
 
-type RootParamList = {
+export interface RootParamList {
   categories: undefined;
   overview: { categoryId: string };
   details: { mealId: string };
-};
+}
 
 export default function OverviewLayout() {
   return (

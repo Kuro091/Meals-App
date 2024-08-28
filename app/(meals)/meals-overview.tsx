@@ -3,13 +3,10 @@ import { FlatList, Text, View } from 'react-native';
 import { CATEGORIES, MEALS } from '../../constants/dummy-data';
 import Meal from '../../constants/Meal';
 import { MealItem } from '../../components/meals/MealItem';
-import { useEffect } from 'react';
-import { NativeStackNavigationOptions } from 'react-native-screens/lib/typescript/native-stack/types';
+import { RootParamList } from './_layout';
 
 export default function MealsOverview() {
-  const { categoryId } = useLocalSearchParams<{
-    categoryId: string;
-  }>();
+  const { categoryId } = useLocalSearchParams<RootParamList['overview']>();
 
   const navigation = useNavigation();
   const router = useRouter();
