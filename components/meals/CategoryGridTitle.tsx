@@ -40,6 +40,7 @@ export const CategoryGridTitle = ({
             style={{
               fontWeight: 'bold',
               fontSize: 16,
+              color: '#fff',
             }}
           >
             {title}

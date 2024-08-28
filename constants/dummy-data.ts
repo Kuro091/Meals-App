@@ -8,10 +8,10 @@ export const CATEGORIES = [
   new Category('c4', 'German', '#c4943f'),
   new Category('c5', 'Light & Lovely', '#2f6bff'),
   new Category('c6', 'Exotic', '#2f7d3f'),
-  new Category('c7', 'Breakfast', '#66c6ff'),
-  new Category('c8', 'Asian', '#7fcc7f'),
-  new Category('c9', 'French', '#ffc0ff'),
-  new Category('c10', 'Summer', '#34b7ed')
+  new Category('c7', 'Breakfast', '#4c8db3'),
+  new Category('c8', 'Asian', '#0c7a0c'),
+  new Category('c9', 'French', '#9e109e'),
+  new Category('c10', 'Summer', '#045e85')
 ];
 
 export const MEALS = [
