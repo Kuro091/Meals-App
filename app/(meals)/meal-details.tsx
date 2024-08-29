@@ -14,6 +14,7 @@ import { RootParamList } from './_layout';
 import { MEALS } from '../../constants/dummy-data';
 import MealDetails from '../../components/meals/MealDetails';
 import { useMealsStore, useShallowMealsStore } from '../../storage/mealStore';
+import { Ionicons } from '@expo/vector-icons';
 
 const Subtitle = ({ children }: { children: string }) => (
   <View
@@ -67,19 +68,28 @@ const List = ({ items }: { items: string[] }) => (
   </View>
 );
 
-const Heart = ({ fill }: { fill: boolean }) => (
-  <View>
+const renderHeartIcon = ({ fill }: { fill: boolean }) => (
+  <>
     {fill ? (
-      <Text style={{ color: 'red', fontSize: 24 }}>❤️</Text>
+      <Ionicons name='heart' size={24} color='red' />
     ) : (
-      <Text style={{ color: 'grey', fontSize: 24 }}>🤍</Text>
+      <Ionicons name='heart-outline' size={24} color='red' />
     )}
-  </View>
+  </>
 );
 
 const HeaderRight = (filled = false, onPress: (e: GestureResponderEvent) => void) => (
-  <Pressable onPress={onPress}>
-    <Heart fill={filled} />
+  <Pressable
+    style={({ pressed }) => ({
+      backgroundColor: 'white',
+      borderRadius: 10,
+      padding: 8,
+      marginBottom: 8,
+      opacity: pressed ? 0.5 : 1,
+    })}
+    onPress={onPress}
+  >
+    {renderHeartIcon({ fill: filled })}
   </Pressable>
 );
 
@@ -89,21 +99,32 @@ export default function MealDetailScreen() {
   const navigation = useNavigation();
   const { favoriteMealIds, setFavoriteMealIds } = useShallowMealsStore();
 
-  const handleFavoriteButtonPressed = (mealId: string) => {
+  const handleFavoriteButtonPressed = (favoriteMealIds: string[], mealId: string) => {
     const index = favoriteMealIds.indexOf(mealId);
+    let newFavoriteMealIds: string[] = [];
+
     if (index === -1) {
-      setFavoriteMealIds([...favoriteMealIds, mealId]);
-      return;
+      newFavoriteMealIds = [...favoriteMealIds, mealId];
+    } else {
+      newFavoriteMealIds = favoriteMealIds.filter((id) => id !== mealId);
     }
-    setFavoriteMealIds(favoriteMealIds.filter((id) => id !== mealId));
+
+    setFavoriteMealIds(newFavoriteMealIds);
+    setNavigation(newFavoriteMealIds);
+  };
+
+  const setNavigation = (favioriteMealIds: string[]) => {
+    const component = HeaderRight(favioriteMealIds.includes(mealId), () =>
+      handleFavoriteButtonPressed(favioriteMealIds, mealId)
+    );
+    navigation.setOptions({
+      headerRight: () => component,
+    });
   };
 
   useEffect(() => {
-    navigation.setOptions({
-      headerRight: () =>
-        HeaderRight(favoriteMealIds.includes(mealId), () => handleFavoriteButtonPressed(mealId)),
-    });
-  }, [favoriteMealIds]);
+    setNavigation(favoriteMealIds);
+  }, []);
 
   return (
     <ScrollView style={{ marginBottom: 36 }}>

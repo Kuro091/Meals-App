@@ -3,12 +3,12 @@ import { useShallow } from 'zustand/react/shallow'
 import { createJSONStorage, persist } from "zustand/middleware";
 import { zustandStorage } from '../lib/zustand-async-storage';
 
-export interface SimpleState {
+export interface MealsState {
   favoriteMealIds: string[];
   setFavoriteMealIds: (ids: string[]) => void;
 }
 
-export const useMealsStore = create<SimpleState>()(
+export const useMealsStore = create<MealsState>()(
   persist(
     (set, get) => ({
       favoriteMealIds: [],
