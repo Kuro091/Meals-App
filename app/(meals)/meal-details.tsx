@@ -98,7 +98,7 @@ const HeaderRight = (filled = false, onPress: (e: GestureResponderEvent) => void
       backgroundColor: 'white',
       borderRadius: 10,
       padding: 8,
-      marginBottom: 8,
+      marginRight: -8,
       opacity: pressed ? 0.5 : 1,
       minWidth: 50,
     })}

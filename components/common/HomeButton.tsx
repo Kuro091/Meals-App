@@ -17,7 +17,7 @@ export function HomeButton({ style }: { style?: StyleProp<ViewStyle> }) {
         style,
       ]}
       onPress={() => {
-        router.push('/');
+        router.replace('/');
       }}
     >
       <Text style={{ color: 'white', padding: 8, textAlign: 'center' }}>🏠</Text>

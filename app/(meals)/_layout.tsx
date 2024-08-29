@@ -24,13 +24,14 @@ export default function OverviewLayout() {
         contentStyle: {
           backgroundColor: 'lightgrey',
         },
-        headerLeft: () => {
-          if (pathname === '/meals-categories') {
-            return <HomeButton />;
-          }
-        },
+        // headerLeft: () => {
+        //   if (pathname === '/meals-categories') {
+        //     return <HomeButton />;
+        //   }
+        // },
       }}
     >
+      <Stack.Screen name='index' />
       <Stack.Screen
         name='meal-details'
         options={({

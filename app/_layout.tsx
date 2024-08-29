@@ -6,6 +6,8 @@ import * as Font from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { useCallback, useEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { Drawer } from 'expo-router/drawer';
 
 export const queryClient = new QueryClient();
 SplashScreen.preventAutoHideAsync();
@@ -54,11 +56,33 @@ export default function App() {
 
   return (
     <>
-      <View style={{ flex: 1, backgroundColor: colorScheme === 'dark' ? 'black' : 'white' }}>
-        <StatusBar style='inverted' backgroundColor='white' />
+      <GestureHandlerRootView
+        style={{ flex: 1, backgroundColor: colorScheme === 'dark' ? 'black' : 'white' }}
+      >
         <QueryClientProvider client={queryClient}>
+          <StatusBar style='dark' backgroundColor='white' />
           {/* <SafeAreaView style={styles.container} onLayout={onLayoutRootView}> */}
-          <Stack
+          <Drawer screenOptions={{}}>
+            <Drawer.Screen
+              name='index'
+              options={{
+                title: 'Home',
+              }}
+            />
+            <Drawer.Screen
+              name='(meals)'
+              options={{
+                title: 'Meals',
+              }}
+            />
+            <Drawer.Screen
+              name='(profile)'
+              options={{
+                title: 'Profile',
+              }}
+            />
+          </Drawer>
+          {/* <Stack
             screenOptions={{
               headerShown: false,
             }}
@@ -66,10 +90,10 @@ export default function App() {
             <Stack.Screen name='index' />
             <Stack.Screen name='(meals)' />
             <Stack.Screen name='(profile)' />
-          </Stack>
+          </Stack> */}
           {/* </SafeAreaView> */}
         </QueryClientProvider>
-      </View>
+      </GestureHandlerRootView>
     </>
   );
 }
