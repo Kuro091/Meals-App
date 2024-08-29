@@ -1,9 +1,19 @@
-import { useLocalSearchParams } from 'expo-router';
-import React from 'react';
-import { Image, SafeAreaView, ScrollView, Text, View } from 'react-native';
+import { useLocalSearchParams, useNavigation } from 'expo-router';
+import React, { useEffect, useLayoutEffect } from 'react';
+import {
+  Button,
+  GestureResponderEvent,
+  Image,
+  Pressable,
+  SafeAreaView,
+  ScrollView,
+  Text,
+  View,
+} from 'react-native';
 import { RootParamList } from './_layout';
 import { MEALS } from '../../constants/dummy-data';
 import MealDetails from '../../components/meals/MealDetails';
+import { useMealsStore, useShallowMealsStore } from '../../storage/mealStore';
 
 const Subtitle = ({ children }: { children: string }) => (
   <View
@@ -57,9 +67,43 @@ const List = ({ items }: { items: string[] }) => (
   </View>
 );
 
+const Heart = ({ fill }: { fill: boolean }) => (
+  <View>
+    {fill ? (
+      <Text style={{ color: 'red', fontSize: 24 }}>❤️</Text>
+    ) : (
+      <Text style={{ color: 'grey', fontSize: 24 }}>🤍</Text>
+    )}
+  </View>
+);
+
+const HeaderRight = (filled = false, onPress: (e: GestureResponderEvent) => void) => (
+  <Pressable onPress={onPress}>
+    <Heart fill={filled} />
+  </Pressable>
+);
+
 export default function MealDetailScreen() {
   const { mealId } = useLocalSearchParams<RootParamList['details']>();
   const meal = MEALS.find((meal) => meal.id === mealId);
+  const navigation = useNavigation();
+  const { favoriteMealIds, setFavoriteMealIds } = useShallowMealsStore();
+
+  const handleFavoriteButtonPressed = (mealId: string) => {
+    const index = favoriteMealIds.indexOf(mealId);
+    if (index === -1) {
+      setFavoriteMealIds([...favoriteMealIds, mealId]);
+      return;
+    }
+    setFavoriteMealIds(favoriteMealIds.filter((id) => id !== mealId));
+  };
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () =>
+        HeaderRight(favoriteMealIds.includes(mealId), () => handleFavoriteButtonPressed(mealId)),
+    });
+  }, [favoriteMealIds]);
 
   return (
     <ScrollView style={{ marginBottom: 36 }}>

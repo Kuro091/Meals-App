@@ -1,7 +1,6 @@
 import { Stack, useNavigation } from 'expo-router';
 import { NavigationProp, RouteProp, ParamListBase } from '@react-navigation/native';
 import { CATEGORIES, MEALS } from '../../constants/dummy-data';
-import { Button } from 'react-native';
 
 export interface RootParamList {
   categories: undefined;
@@ -60,14 +59,6 @@ export default function OverviewLayout() {
 
           return {
             headerTitle: `${category?.title.toUpperCase()}`,
-            headerRight: () => (
-              <Button
-                title='Category'
-                onPress={() => {
-                  navigation.navigate('meals-categories');
-                }}
-              />
-            ),
           };
         }}
       />
