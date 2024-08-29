@@ -58,13 +58,14 @@ export default function App() {
         <StatusBar style='inverted' backgroundColor='white' />
         <QueryClientProvider client={queryClient}>
           {/* <SafeAreaView style={styles.container} onLayout={onLayoutRootView}> */}
-          <Stack>
-            <Stack.Screen
-              name='(meals)'
-              options={{
-                headerShown: false,
-              }}
-            />
+          <Stack
+            screenOptions={{
+              headerShown: false,
+            }}
+          >
+            <Stack.Screen name='index' />
+            <Stack.Screen name='(meals)' />
+            <Stack.Screen name='(profile)' />
           </Stack>
           {/* </SafeAreaView> */}
         </QueryClientProvider>

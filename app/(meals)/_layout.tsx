@@ -1,6 +1,8 @@
-import { Stack, useNavigation } from 'expo-router';
+import { Stack, useNavigation, usePathname, useRouter } from 'expo-router';
 import { NavigationProp, RouteProp, ParamListBase } from '@react-navigation/native';
 import { CATEGORIES, MEALS } from '../../constants/dummy-data';
+import { Button, Pressable, Text } from 'react-native';
+import { HomeButton } from '../../components/common/HomeButton';
 
 export interface RootParamList {
   categories: undefined;
@@ -9,6 +11,8 @@ export interface RootParamList {
 }
 
 export default function OverviewLayout() {
+  const pathname = usePathname();
+
   return (
     <Stack
       screenOptions={{
@@ -19,6 +23,11 @@ export default function OverviewLayout() {
         headerTintColor: 'white',
         contentStyle: {
           backgroundColor: 'lightgrey',
+        },
+        headerLeft: () => {
+          if (pathname === '/meals-categories') {
+            return <HomeButton />;
+          }
         },
       }}
     >

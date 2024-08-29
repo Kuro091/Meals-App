@@ -71,9 +71,23 @@ const List = ({ items }: { items: string[] }) => (
 const renderHeartIcon = ({ fill }: { fill: boolean }) => (
   <>
     {fill ? (
-      <Ionicons name='heart' size={24} color='red' />
+      <Ionicons
+        style={{
+          textAlign: 'center',
+        }}
+        name='heart'
+        size={24}
+        color='red'
+      />
     ) : (
-      <Ionicons name='heart-outline' size={24} color='red' />
+      <Ionicons
+        style={{
+          textAlign: 'center',
+        }}
+        name='heart-outline'
+        size={24}
+        color='red'
+      />
     )}
   </>
 );
@@ -86,6 +100,7 @@ const HeaderRight = (filled = false, onPress: (e: GestureResponderEvent) => void
       padding: 8,
       marginBottom: 8,
       opacity: pressed ? 0.5 : 1,
+      minWidth: 50,
     })}
     onPress={onPress}
   >
