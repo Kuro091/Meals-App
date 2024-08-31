@@ -19,35 +19,14 @@ interface PressableTabLinkProps {
   navigation: NavigationHelpers<ParamListBase, BottomTabNavigationEventMap>;
 }
 
-const COLORS_MAP = {
-  focused: {
-    background: 'blue',
-    textColor: 'white',
-  },
-  unfocused: {
-    background: 'white',
-    textColor: 'black',
-  },
-  pressed: {
-    background: 'rgba(0, 0, 0, 0.1)',
-    textColor: 'black',
-  },
-};
-
-const getTabBackgroundColor = (pressed = false, focused = false) => {
-  if (pressed) {
-    return COLORS_MAP.pressed.background;
-  }
-
-  return focused ? COLORS_MAP.focused.background : COLORS_MAP.unfocused.background;
-};
-
 const getTabTextColor = (pressed = false, focused = false) => {
   if (pressed) {
-    return COLORS_MAP.pressed.textColor;
+    return 'black';
+  } else if (focused) {
+    return 'black';
+  } else {
+    return 'grey';
   }
-
-  return focused ? COLORS_MAP.focused.textColor : COLORS_MAP.unfocused.textColor;
 };
 
 function PressableTabLink({ isFocused, label, navigation, route }: PressableTabLinkProps) {
@@ -68,7 +47,6 @@ function PressableTabLink({ isFocused, label, navigation, route }: PressableTabL
         minHeight: 50,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: getTabBackgroundColor(pressed, isFocused),
         flex: 1,
         marginHorizontal: -8,
       })}
@@ -78,6 +56,8 @@ function PressableTabLink({ isFocused, label, navigation, route }: PressableTabL
           color: getTabTextColor(false, isFocused),
           padding: 8,
           textAlign: 'center',
+          fontSize: 16,
+          fontWeight: isFocused ? 'bold' : 'normal',
         }}
       >
         {typeof label === 'string' ? label : ''}
@@ -101,10 +81,11 @@ export default function TabLayout() {
         return (
           <View
             style={{
+              height: 50,
               flexDirection: 'row',
               alignItems: 'center',
               justifyContent: 'space-around',
-              paddingBottom: insets.bottom - 20,
+              paddingBottom: insets.bottom + 20,
               paddingTop: insets.top,
             }}
           >
@@ -131,7 +112,7 @@ export default function TabLayout() {
             })}
             <HomeButton
               style={{
-                height: 85,
+                height: 100,
                 borderRadius: 50,
                 zIndex: 1,
               }}
@@ -164,7 +145,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name='profile'
         options={{
-          title: 'Home2',
+          title: 'Home',
           tabBarIcon: ({ color }) => <FontAwesome size={28} name='home' color={color} />,
         }}
       />

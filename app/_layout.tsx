@@ -8,6 +8,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Drawer } from 'expo-router/drawer';
+import { Ionicons } from '@expo/vector-icons';
 
 export const queryClient = new QueryClient();
 SplashScreen.preventAutoHideAsync();
@@ -56,29 +57,56 @@ export default function App() {
 
   return (
     <>
-      <GestureHandlerRootView
-        style={{ flex: 1, backgroundColor: colorScheme === 'dark' ? 'black' : 'white' }}
-      >
-        <QueryClientProvider client={queryClient}>
+      <QueryClientProvider client={queryClient}>
+        <GestureHandlerRootView
+          style={{ flex: 1, backgroundColor: colorScheme === 'dark' ? 'black' : 'white' }}
+        >
           <StatusBar style='dark' backgroundColor='white' />
-          {/* <SafeAreaView style={styles.container} onLayout={onLayoutRootView}> */}
-          <Drawer screenOptions={{}}>
+          <Drawer
+            screenOptions={{
+              drawerActiveTintColor: 'blue',
+              headerBackground(props) {
+                return (
+                  <LinearGradient colors={['#4c669f', '#3b5998', '#192f6a']} style={{ flex: 1 }} />
+                );
+              },
+              headerTintColor: 'white',
+            }}
+            detachInactiveScreens={false}
+          >
             <Drawer.Screen
               name='index'
               options={{
                 title: 'Home',
+                drawerIcon: ({ focused, color, size }) => (
+                  <Ionicons name={focused ? 'home' : 'home-outline'} size={size} color={color} />
+                ),
               }}
             />
             <Drawer.Screen
               name='(meals)'
               options={{
                 title: 'Meals',
+                drawerIcon: ({ focused, color, size }) => (
+                  <Ionicons
+                    name={focused ? 'fast-food' : 'fast-food-outline'}
+                    size={size}
+                    color={color}
+                  />
+                ),
               }}
             />
             <Drawer.Screen
               name='(profile)'
               options={{
                 title: 'Profile',
+                drawerIcon: ({ focused, color, size }) => (
+                  <Ionicons
+                    name={focused ? 'person' : 'person-outline'}
+                    size={size}
+                    color={color}
+                  />
+                ),
               }}
             />
           </Drawer>
@@ -91,9 +119,8 @@ export default function App() {
             <Stack.Screen name='(meals)' />
             <Stack.Screen name='(profile)' />
           </Stack> */}
-          {/* </SafeAreaView> */}
-        </QueryClientProvider>
-      </GestureHandlerRootView>
+        </GestureHandlerRootView>
+      </QueryClientProvider>
     </>
   );
 }

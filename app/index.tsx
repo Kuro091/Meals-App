@@ -64,15 +64,14 @@ export default function HomeScreen() {
           flex: 1,
           justifyContent: 'center',
           alignItems: 'center',
-          flexDirection: 'row',
           columnGap: 10,
         }}
       >
         <LinkButton to='/meals-categories' backgroundColor='rgb(68, 1, 1)'>
-          Categories
+          Categories (stack layout)
         </LinkButton>
         <LinkButton to='/profile' backgroundColor='rgb(44, 27, 90)'>
-          Go to tabbed layout
+          Profile (tab layout)
         </LinkButton>
       </View>
     </SafeAreaView>
