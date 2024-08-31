@@ -1,6 +1,6 @@
-import { create } from "zustand";
-import { useShallow } from 'zustand/react/shallow'
-import { createJSONStorage, persist } from "zustand/middleware";
+import { create } from 'zustand';
+import { useShallow } from 'zustand/react/shallow';
+import { createJSONStorage, persist, subscribeWithSelector } from 'zustand/middleware';
 import { zustandStorage } from '../lib/zustand-async-storage';
 
 export interface MealsState {
@@ -9,18 +9,18 @@ export interface MealsState {
 }
 
 export const useMealsStore = create<MealsState>()(
-  persist(
-    (set, get) => ({
-      favoriteMealIds: [],
-      setFavoriteMealIds: (ids) => set({ favoriteMealIds: ids }),
-    }),
-    {
-      name: "async-storage",
-      storage: createJSONStorage(() => zustandStorage),
-    }
+  subscribeWithSelector(
+    persist(
+      (set, get) => ({
+        favoriteMealIds: [],
+        setFavoriteMealIds: (ids) => set({ favoriteMealIds: ids }),
+      }),
+      {
+        name: 'async-storage',
+        storage: createJSONStorage(() => zustandStorage),
+      }
+    )
   )
 );
 
-export const useShallowMealsStore = () => useMealsStore(
-  useShallow((state) => state)
-)
+export const useShallowMealsStore = () => useMealsStore(useShallow((state) => state));

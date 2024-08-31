@@ -1,7 +1,5 @@
 import { Href, Link, Redirect } from 'expo-router';
 import { SafeAreaView, Text, View } from 'react-native';
-import { useMealsStore } from '../storage/mealStore';
-import { MEALS } from '../constants/dummy-data';
 
 const LinkButton = ({
   to,
@@ -29,36 +27,8 @@ const LinkButton = ({
 );
 
 export default function HomeScreen() {
-  const { favoriteMealIds } = useMealsStore();
-  const favoriteMeals = MEALS.filter((meal) => favoriteMealIds.includes(meal.id));
-
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <View
-        style={{
-          padding: 20,
-          gap: 10,
-        }}
-      >
-        <Text style={{ fontSize: 12, fontWeight: 'bold', marginBottom: 20, textAlign: 'center' }}>
-          Current favorite meals:
-        </Text>
-        {favoriteMeals.length === 0 && ' None'}
-        {favoriteMeals.length > 0 &&
-          favoriteMeals.map((meal) => (
-            <Link
-              style={{
-                backgroundColor: 'rgb(44, 27, 90)',
-                color: 'white',
-                padding: 10,
-              }}
-              key={meal.id}
-              href={`/meal-details?mealId=${meal.id}`}
-            >
-              {meal.title}
-            </Link>
-          ))}
-      </View>
       <View
         style={{
           flex: 1,

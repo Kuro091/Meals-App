@@ -87,8 +87,20 @@ export default function TabLayout() {
               justifyContent: 'space-around',
               paddingBottom: insets.bottom + 20,
               paddingTop: insets.top,
+              position: 'relative',
             }}
           >
+            <View
+              style={{
+                height: 2,
+                width: '80%',
+                backgroundColor: '#535353',
+                position: 'absolute',
+                top: 0,
+                left: '10%',
+                borderRadius: 1,
+              }}
+            ></View>
             {firstHalf.map((route, index) => {
               const { options } = descriptors[route.key];
               const label =
@@ -140,6 +152,9 @@ export default function TabLayout() {
             })}
           </View>
         );
+      }}
+      screenOptions={{
+        headerShown: false,
       }}
     >
       <Tabs.Screen

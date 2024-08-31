@@ -1,4 +1,4 @@
-import { useLocalSearchParams, useNavigation } from 'expo-router';
+import { useFocusEffect, useLocalSearchParams, useNavigation } from 'expo-router';
 import React, { useEffect, useLayoutEffect } from 'react';
 import {
   Button,
@@ -112,8 +112,10 @@ export default function MealDetailScreen() {
   const { mealId } = useLocalSearchParams<RootParamList['details']>();
   const meal = MEALS.find((meal) => meal.id === mealId);
   const navigation = useNavigation();
-  const { favoriteMealIds, setFavoriteMealIds } = useShallowMealsStore();
+  const { favoriteMealIds, setFavoriteMealIds } = useMealsStore();
 
+  console.log('mealId', mealId);
+  console.log('favoriteMealIds', favoriteMealIds);
   const handleFavoriteButtonPressed = (favoriteMealIds: string[], mealId: string) => {
     const index = favoriteMealIds.indexOf(mealId);
     let newFavoriteMealIds: string[] = [];
@@ -137,9 +139,9 @@ export default function MealDetailScreen() {
     });
   };
 
-  useEffect(() => {
+  useFocusEffect(() => {
     setNavigation(favoriteMealIds);
-  }, []);
+  });
 
   return (
     <ScrollView style={{ marginBottom: 36 }}>
