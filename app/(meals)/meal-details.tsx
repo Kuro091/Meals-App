@@ -1,4 +1,4 @@
-import { useFocusEffect, useLocalSearchParams, useNavigation } from 'expo-router';
+import { router, useFocusEffect, useLocalSearchParams, useNavigation } from 'expo-router';
 import React, { useEffect, useLayoutEffect } from 'react';
 import {
   Button,
@@ -114,8 +114,6 @@ export default function MealDetailScreen() {
   const navigation = useNavigation();
   const { favoriteMealIds, setFavoriteMealIds } = useMealsStore();
 
-  console.log('mealId', mealId);
-  console.log('favoriteMealIds', favoriteMealIds);
   const handleFavoriteButtonPressed = (favoriteMealIds: string[], mealId: string) => {
     const index = favoriteMealIds.indexOf(mealId);
     let newFavoriteMealIds: string[] = [];
@@ -134,8 +132,31 @@ export default function MealDetailScreen() {
     const component = HeaderRight(favioriteMealIds.includes(mealId), () =>
       handleFavoriteButtonPressed(favioriteMealIds, mealId)
     );
+
     navigation.setOptions({
       headerRight: () => component,
+      headerLeft: () => {
+        if (!router.canGoBack()) {
+          return (
+            <Pressable
+              style={({ pressed }) => ({
+                backgroundColor: pressed ? 'lightgrey' : 'white',
+                borderRadius: 6,
+                minWidth: 100,
+                alignItems: 'center',
+                justifyContent: 'center',
+              })}
+              onPress={() => {
+                router.push('/meals-categories');
+              }}
+            >
+              <Text style={{ color: 'white', padding: 8, textAlign: 'center' }}>
+                <Ionicons name='home' size={15} color='black' />
+              </Text>
+            </Pressable>
+          );
+        }
+      },
     });
   };
 
